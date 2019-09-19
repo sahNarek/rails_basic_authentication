@@ -3,8 +3,12 @@ module Api
     class UsersController < ApplicationController
     before_action :authenticate_request, except: :create
 
-    def index
-      render json: @current_user
+    def show
+      if user_logged?
+        render json: @current_user
+      else
+        head(:unauthorized)
+      end
     end
 
     def create
@@ -19,8 +23,12 @@ module Api
 
       private
 
+    def user_logged?
+      @current_user.id == params[:id].to_i
+    end
+
     def user_params
-      params.permit(:first_name, :last_name,
+      params.permit(:id, :first_name, :last_name,
                     :email, :password, :password_confirmation)
     end
 

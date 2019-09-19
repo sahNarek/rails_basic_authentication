@@ -9,7 +9,10 @@ module Api
             exp_time = Time.now + 24.hours.to_i
             token = JsonWebToken.encode(user_id: @user.id)
             @user.update_attribute(:logged, true)
-            render json: {token: token, exp: exp_time.strftime("%m-%d-%Y %H:%M"), email: @user.email, logged: @user.logged},
+            render json: {token: token, exp: exp_time.strftime("%m-%d-%Y %H:%M"),
+                          user_id: @user.id,
+                          email: @user.email,
+                          logged: @user.logged,},
                    status: :ok
           rescue JWT::EncodeError => e
             render json: {message: e.message}, status: :unauthorized

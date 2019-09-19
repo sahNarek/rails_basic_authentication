@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   namespace "api" do
     namespace "v1" do
       post "/signup", to: "users#create", defaults: {format: "json"}
-      resources :users, only: [:show, :update, :index]
+      resources :users, only: [:show, :update]
       post "/login", to: "authentications#login", defaults: {format: "json"}
       delete "/logout", to: "authentications#logout", defaults: {format: "json"}
     end
